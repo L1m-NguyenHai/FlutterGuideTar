@@ -1,17 +1,9 @@
 {
-  "servers": {
-    // "figma-mcp-go": {
-    //   "type": "stdio",
-    //   "command": "npx",
-    //   "args": [
-    //     "-y",
-    //     "@vkhanhqui/figma-mcp-go"
-    //   ]
-    // },
-    "Figma MCP": {
-      "type": "http",
-      "url": "http://127.0.0.1:3845/mcp"
-    }
-  },
-  "inputs": []
+	"servers": {
+		"Figma MCP": {
+			"url": "http://127.0.0.1:3845/mcp",
+			"type": "http"
+		}
+	},
+	"inputs": []
 }
