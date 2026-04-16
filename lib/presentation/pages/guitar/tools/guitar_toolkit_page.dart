@@ -141,7 +141,7 @@ class _GuitarToolkitPageState extends State<GuitarToolkitPage> {
                     _closeSidebar();
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (_) => const GuitarToolkitPage(),
+                        builder: (_) => const GuitarCoursePage(),
                       ),
                     );
                   },
