@@ -83,7 +83,7 @@ class _MembershipUpdatePaymentPageState extends State<MembershipUpdatePaymentPag
                             ),
                             SizedBox(width: 12),
                             Expanded(
-                              child: _CardMeta(label: 'EXPRIES', value: '09/06'),
+                              child: _CardMeta(label: 'EXPIRES', value: '09/06'),
                             ),
                           ],
                         ),
