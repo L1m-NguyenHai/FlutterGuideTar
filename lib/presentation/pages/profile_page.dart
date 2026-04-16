@@ -3,6 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:guidetar/presentation/pages/support_page.dart';
 
+import 'package:guidetar/presentation/pages/edit_profile_page.dart';
+import 'package:guidetar/presentation/pages/favorite_list.dart';
+import 'package:guidetar/presentation/pages/weekly_info_page.dart';
 import 'package:guidetar/presentation/widgets/home_bottom_navbar.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -26,18 +29,27 @@ class _ProfilePageState extends State<ProfilePage> {
               padding: const EdgeInsets.fromLTRB(24, 76, 24, 120),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  _ProfileHeaderSection(),
-                  SizedBox(height: 24),
-                  _StreakSection(),
-                  SizedBox(height: 24),
-                  _FavoritesSection(),
-                  SizedBox(height: 28),
-                  _RecentLessonsSection(),
-                  SizedBox(height: 28),
-                  _PersonalNotesSection(),
-                  SizedBox(height: 20),
-                  _ProfileSettingsSection(),
+                children: [
+                  const _ProfileHeaderSection(),
+                  const SizedBox(height: 24),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const WeeklyInfoPage(),
+                        ),
+                      );
+                    },
+                    child: const _StreakSection(),
+                  ),
+                  const SizedBox(height: 24),
+                  const _FavoritesSection(),
+                  const SizedBox(height: 28),
+                  const _RecentLessonsSection(),
+                  const SizedBox(height: 28),
+                  const _PersonalNotesSection(),
+                  const SizedBox(height: 20),
+                  const _ProfileSettingsSection(),
                 ],
               ),
             ),
@@ -162,11 +174,20 @@ class _ProfileHeaderSection extends StatelessWidget {
                 Positioned(
                   right: 4,
                   bottom: 4,
-                  child: SizedBox(
-                    width: 22.5,
-                    height: 22.5,
-                    child: _SafeSvgAsset(
-                      'assets/icons/profile_camera_badge.svg',
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const EditProfilePage(),
+                        ),
+                      );
+                    },
+                    child: SizedBox(
+                      width: 22.5,
+                      height: 22.5,
+                      child: _SafeSvgAsset(
+                        'assets/icons/profile_camera_badge.svg',
+                      ),
                     ),
                   ),
                 ),
@@ -377,14 +398,23 @@ class _FavoritesSection extends StatelessWidget {
                 height: 28 / 20,
               ),
             ),
-            Text(
-              'XEM TẤT CẢ',
-              style: GoogleFonts.manrope(
-                color: const Color(0xFFFFB786),
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 1.2,
-                height: 16 / 12,
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const FavoriteListPage(),
+                  ),
+                );
+              },
+              child: Text(
+                'XEM TẤT CẢ',
+                style: GoogleFonts.manrope(
+                  color: const Color(0xFFFFB786),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 1.2,
+                  height: 16 / 12,
+                ),
               ),
             ),
           ],
