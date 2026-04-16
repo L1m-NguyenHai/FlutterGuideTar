@@ -134,7 +134,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
                         child: Container(
-                          width: 360,
+                          constraints: const BoxConstraints(maxWidth: 360),
                           margin: const EdgeInsets.symmetric(horizontal: 20),
                           padding: const EdgeInsets.all(32),
                           decoration: BoxDecoration(
