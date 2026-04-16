@@ -5,6 +5,9 @@ import 'package:guidetar/presentation/pages/guitar/tools/guitar_toolkit_page.dar
 import 'package:guidetar/presentation/pages/piano/tools/piano_toolkit_page.dart';
 import 'package:guidetar/presentation/pages/profile_page.dart';
 import 'package:guidetar/presentation/pages/recent_page.dart';
+import 'package:guidetar/presentation/pages/settings_page.dart';
+import 'package:guidetar/presentation/pages/support_page.dart';
+import 'package:guidetar/presentation/pages/login_page.dart';
 import 'package:guidetar/presentation/widgets/app_sidebar_panel.dart';
 import 'package:guidetar/presentation/widgets/home_bottom_navbar.dart';
 
@@ -50,6 +53,25 @@ class _HomePageState extends State<HomePage> {
     ).push(MaterialPageRoute(builder: (_) => const RecentPage()));
   }
 
+  void _openSettings() {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const SettingsPage()));
+  }
+
+  void _openSupport() {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const SupportPage()));
+  }
+
+  void _logout() {
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const LoginPage()),
+      (route) => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,22 +110,35 @@ class _HomePageState extends State<HomePage> {
                 SidebarMenuItem(
                   label: 'Khoá học',
                   icon: Icons.menu_book_outlined,
-                  onTap: _closeSidebar,
+                  onTap: () {
+                    _closeSidebar();
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const GuitarToolkitPage(),
+                      ),
+                    );
+                  },
                 ),
                 SidebarMenuItem(
                   label: 'Hỗ trợ',
                   icon: Icons.headset_mic_outlined,
-                  onTap: _closeSidebar,
+                  onTap: () {
+                    _closeSidebar();
+                    _openSupport();
+                  },
                 ),
                 SidebarMenuItem(
                   label: 'Cài đặt',
                   icon: Icons.settings_outlined,
-                  onTap: _closeSidebar,
+                  onTap: () {
+                    _closeSidebar();
+                    _openSettings();
+                  },
                 ),
                 SidebarMenuItem(
                   label: 'Đăng xuất',
                   icon: Icons.logout,
-                  onTap: _closeSidebar,
+                  onTap: _logout,
                 ),
               ],
             ),

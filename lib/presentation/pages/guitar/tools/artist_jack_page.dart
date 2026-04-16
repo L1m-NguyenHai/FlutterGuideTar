@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:guidetar/presentation/pages/guitar/tools/artist_jack_album_page.dart';
 import 'package:guidetar/presentation/state/follow_state.dart';
 import 'package:guidetar/presentation/widgets/home_bottom_navbar.dart';
 
@@ -123,11 +124,11 @@ class _ArtistJackPageState extends State<ArtistJackPage> {
                             color: const Color(0xFFFF923E),
                             borderRadius: BorderRadius.circular(999),
                           ),
-                          child: Center(
-                            child: SizedBox(
-                              width: 16,
-                              height: 20,
-                              child: SvgPicture.asset('assets/icons/pro_tuner_stepper_play.svg'),
+                          child: const Center(
+                            child: Icon(
+                              Icons.play_arrow_rounded,
+                              color: Color(0xFF1A1A1A),
+                              size: 34,
                             ),
                           ),
                         ),
@@ -199,13 +200,23 @@ class _ArtistJackPageState extends State<ArtistJackPage> {
                             letterSpacing: -0.6,
                           ),
                         ),
-                        Text(
-                          'XEM TẤT CẢ',
-                          style: GoogleFonts.splineSans(
-                            color: const Color(0xFFFF923E),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: 1.4,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => const ArtistJackAlbumPage(),
+                              ),
+                            );
+                          },
+                          behavior: HitTestBehavior.opaque,
+                          child: Text(
+                            'XEM TẤT CẢ',
+                            style: GoogleFonts.splineSans(
+                              color: const Color(0xFFFF923E),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 1.4,
+                            ),
                           ),
                         ),
                       ],

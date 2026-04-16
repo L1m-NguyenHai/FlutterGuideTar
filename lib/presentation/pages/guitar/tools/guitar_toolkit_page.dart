@@ -6,7 +6,9 @@ import 'package:guidetar/presentation/pages/guitar/tools/dechord_page.dart';
 import 'package:guidetar/presentation/pages/guitar/tools/guitar_ear_training_page.dart';
 import 'package:guidetar/presentation/pages/guitar/courses/guitar_course_page.dart';
 import 'package:guidetar/presentation/pages/guitar/tools/pro_tuner_page.dart';
+import 'package:guidetar/presentation/pages/login_page.dart';
 import 'package:guidetar/presentation/pages/settings_page.dart';
+import 'package:guidetar/presentation/pages/support_page.dart';
 import 'package:guidetar/presentation/widgets/app_sidebar_panel.dart';
 import 'package:guidetar/presentation/widgets/home_bottom_navbar.dart';
 
@@ -78,6 +80,20 @@ class _GuitarToolkitPageState extends State<GuitarToolkitPage> {
     ).push(MaterialPageRoute(builder: (_) => const SettingsPage()));
   }
 
+  void _openSupport() {
+    _closeSidebar();
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const SupportPage()));
+  }
+
+  void _logout() {
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const LoginPage()),
+      (route) => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,12 +137,19 @@ class _GuitarToolkitPageState extends State<GuitarToolkitPage> {
                 SidebarMenuItem(
                   label: 'Khoá học',
                   icon: Icons.menu_book_outlined,
-                  onTap: _closeSidebar,
+                  onTap: () {
+                    _closeSidebar();
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const GuitarCoursePage(),
+                      ),
+                    );
+                  },
                 ),
                 SidebarMenuItem(
                   label: 'Hỗ trợ',
                   icon: Icons.headset_mic_outlined,
-                  onTap: _closeSidebar,
+                  onTap: _openSupport,
                 ),
                 SidebarMenuItem(
                   label: 'Cài đặt',
@@ -136,7 +159,7 @@ class _GuitarToolkitPageState extends State<GuitarToolkitPage> {
                 SidebarMenuItem(
                   label: 'Đăng xuất',
                   icon: Icons.logout,
-                  onTap: _closeSidebar,
+                  onTap: _logout,
                 ),
               ],
             ),
@@ -205,6 +228,7 @@ class _GuitarToolkitPageState extends State<GuitarToolkitPage> {
                                     ),
                                   ),
                                 ),
+                                clipBehavior: Clip.antiAlias,
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -417,15 +441,21 @@ class _ModeButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         decoration: BoxDecoration(
-          color: selected ? const Color(0xFFFF923E) : const Color(0xFF131313),
+          color: selected ? const Color(0xFFFF923E) : Colors.transparent,
           borderRadius: BorderRadius.circular(999),
+          border: Border.all(
+            color: selected
+                ? const Color.fromRGBO(255, 191, 132, 0.45)
+                : Colors.transparent,
+            width: 0.8,
+          ),
           boxShadow: selected
               ? const [
                   BoxShadow(
-                    color: Color.fromRGBO(255, 146, 62, 0.2),
-                    blurRadius: 15,
-                    offset: Offset(0, 10),
-                    spreadRadius: -3,
+                    color: Color.fromRGBO(255, 146, 62, 0.12),
+                    blurRadius: 6,
+                    offset: Offset(0, 2),
+                    spreadRadius: 0,
                   ),
                 ]
               : null,

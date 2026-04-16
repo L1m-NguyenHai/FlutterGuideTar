@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:guidetar/presentation/pages/home_page.dart';
+import 'package:guidetar/presentation/pages/register_page.dart';
 import 'package:guidetar/config/theme.dart';
 import 'package:guidetar/utils/app_constants.dart';
 
@@ -98,12 +99,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Image.asset(
-              _bgImageAsset,
-              fit: BoxFit.cover,
-            ),
-          ),
+          Positioned.fill(child: Image.asset(_bgImageAsset, fit: BoxFit.cover)),
           Positioned.fill(
             child: Container(
               decoration: const BoxDecoration(
@@ -123,7 +119,10 @@ class _LoginPageState extends State<LoginPage> {
           SafeArea(
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 24,
+                ),
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 448),
                   child: FittedBox(
@@ -182,10 +181,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ],
         ),
-        const Padding(
-          padding: EdgeInsets.all(10),
-          child: _TaglineText(),
-        ),
+        const Padding(padding: EdgeInsets.all(10), child: _TaglineText()),
         Padding(
           padding: const EdgeInsets.all(10),
           child: Text(
@@ -429,27 +425,40 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildFooter() {
     return Center(
-      child: RichText(
-        textAlign: TextAlign.center,
-        text: TextSpan(
-          style: GoogleFonts.manrope(
-            fontSize: 16,
-            height: 24 / 16,
-          ),
-          children: const [
-            TextSpan(
-              text: 'Không có tài khoản? ',
-              style: TextStyle(color: AppColors.textSecondary),
+      child: Wrap(
+        spacing: 4,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          Text(
+            'Không có tài khoản?',
+            style: GoogleFonts.manrope(
+              fontSize: 16,
+              height: 24 / 16,
+              color: AppColors.textSecondary,
             ),
-            TextSpan(
-              text: 'Đăng ký ngay',
-              style: TextStyle(
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const RegisterPage()));
+            },
+            style: TextButton.styleFrom(
+              minimumSize: Size.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              padding: EdgeInsets.zero,
+            ),
+            child: Text(
+              'Đăng ký ngay',
+              style: GoogleFonts.manrope(
+                fontSize: 16,
+                height: 24 / 16,
                 color: AppColors.primaryOrange,
                 fontWeight: FontWeight.w700,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -500,21 +509,14 @@ class _InputField extends StatelessWidget {
       child: Row(
         children: [
           const Gap(16),
-          SizedBox(
-            width: 20,
-            height: 21,
-            child: SvgPicture.asset(iconAsset),
-          ),
+          SizedBox(width: 20, height: 21, child: SvgPicture.asset(iconAsset)),
           const Gap(12),
           Expanded(
             child: TextFormField(
               controller: controller,
               keyboardType: keyboardType,
               obscureText: obscureText,
-              style: GoogleFonts.manrope(
-                color: Colors.white,
-                fontSize: 16,
-              ),
+              style: GoogleFonts.manrope(color: Colors.white, fontSize: 16),
               validator: (value) {
                 if (hintText.contains('gma') && (value?.isEmpty ?? true)) {
                   return 'Vui lòng nhập email';
@@ -534,10 +536,7 @@ class _InputField extends StatelessWidget {
               ),
             ),
           ),
-          if (trailing != null) ...[
-            trailing!,
-            const Gap(16),
-          ],
+          if (trailing != null) ...[trailing!, const Gap(16)],
         ],
       ),
     );
@@ -557,9 +556,7 @@ class _SocialButton extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color.fromRGBO(38, 38, 38, 0.5),
         shape: BoxShape.circle,
-        border: Border.all(
-          color: const Color.fromRGBO(255, 255, 255, 0.05),
-        ),
+        border: Border.all(color: const Color.fromRGBO(255, 255, 255, 0.05)),
       ),
       child: Center(
         child: SizedBox(

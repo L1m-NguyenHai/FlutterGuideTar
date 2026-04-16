@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:guidetar/presentation/pages/support_page.dart';
 
 import 'package:guidetar/presentation/widgets/home_bottom_navbar.dart';
 
@@ -858,21 +859,26 @@ class _ProfileSettingsSection extends StatelessWidget {
         border: Border(top: BorderSide(color: Color.fromRGBO(87, 66, 53, 0.1))),
       ),
       child: Column(
-        children: const [
-          _SettingRow(
+        children: [
+          const _SettingRow(
             iconAsset: 'assets/icons/profile_setting.svg',
             text: 'Cài đặt ứng dụng',
           ),
-          _SettingRow(
+          const _SettingRow(
             iconAsset: 'assets/icons/profile_policy.svg',
             text: 'Điều khoản & chính sách',
           ),
           _SettingRow(
             iconAsset: 'assets/icons/profile_support.svg',
             text: 'Hỗ trợ',
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const SupportPage()),
+              );
+            },
           ),
-          SizedBox(height: 8),
-          Opacity(
+          const SizedBox(height: 8),
+          const Opacity(
             opacity: 0.6,
             child: Text(
               'ĐĂNG XUẤT',
@@ -892,46 +898,50 @@ class _ProfileSettingsSection extends StatelessWidget {
 }
 
 class _SettingRow extends StatelessWidget {
-  const _SettingRow({required this.iconAsset, required this.text});
+  const _SettingRow({required this.iconAsset, required this.text, this.onTap});
 
   final String iconAsset;
   final String text;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: 20.1,
-                  height: 20,
-                  child: _SafeSvgAsset(iconAsset),
-                ),
-                const SizedBox(width: 16),
-                Text(
-                  text,
-                  style: GoogleFonts.manrope(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    height: 24 / 16,
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  SizedBox(
+                    width: 20.1,
+                    height: 20,
+                    child: _SafeSvgAsset(iconAsset),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: 4.317,
-              height: 7,
-              child: _SafeSvgAsset('assets/icons/profile_chevron_right.svg'),
-            ),
-          ],
+                  const SizedBox(width: 16),
+                  Text(
+                    text,
+                    style: GoogleFonts.manrope(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      height: 24 / 16,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: 4.317,
+                height: 7,
+                child: _SafeSvgAsset('assets/icons/profile_chevron_right.svg'),
+              ),
+            ],
+          ),
         ),
       ),
     );
