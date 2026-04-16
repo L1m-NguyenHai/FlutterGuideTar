@@ -62,7 +62,7 @@ class _CompactHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'CHAPTER 04 • INTERMEDIATE THEORY',
+                  '',
                   style: GoogleFonts.plusJakartaSans(
                     color: const Color(0xFFE4A16B),
                     fontSize: 10,
@@ -72,7 +72,7 @@ class _CompactHeader extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'Mastering C Major 7',
+                  'Piano Simulation',
                   style: GoogleFonts.plusJakartaSans(
                     color: const Color(0xFFF4F4F5),
                     fontSize: 36 * 0.62,

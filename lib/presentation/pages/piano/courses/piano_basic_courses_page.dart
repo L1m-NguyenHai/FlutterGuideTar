@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:guidetar/presentation/pages/piano/courses/piano_intro_detail_page.dart';
+import 'package:guidetar/presentation/pages/piano/courses/speed_boost_lesson_page.dart';
+import 'package:guidetar/presentation/pages/piano/courses/finger_strength_lesson_page.dart';
+import 'package:guidetar/presentation/pages/piano/courses/reading_sheet_music_lesson_page.dart';
 
 import 'package:guidetar/presentation/widgets/home_bottom_navbar.dart';
 
@@ -19,6 +22,24 @@ class _PianoBasicCoursesPageState extends State<PianoBasicCoursesPage> {
     Navigator.of(
       context,
     ).push(MaterialPageRoute(builder: (_) => const PianoIntroDetailPage()));
+  }
+
+  void _openSpeedBoostLesson() {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const SpeedBoostLessonPage()));
+  }
+
+  void _openFingerStrengthLesson() {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const FingerStrengthLessonPage()));
+  }
+
+  void _openReadingSheetMusicLesson() {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const ReadingSheetMusicLessonPage()));
   }
 
   @override
@@ -55,7 +76,11 @@ class _PianoBasicCoursesPageState extends State<PianoBasicCoursesPage> {
                   SizedBox(height: 16),
                   const _ChordsCarousel(),
                   SizedBox(height: 40),
-                  const _TechniquesSection(),
+                  _TechniquesSection(
+                    onSpeedBoostTap: _openSpeedBoostLesson,
+                    onFingerStrengthTap: _openFingerStrengthLesson,
+                    onReadingSheetMusicTap: _openReadingSheetMusicLesson,
+                  ),
                 ],
               ),
             ),
@@ -563,7 +588,15 @@ class _ChordsCarousel extends StatelessWidget {
 }
 
 class _TechniquesSection extends StatelessWidget {
-  const _TechniquesSection();
+  final VoidCallback onSpeedBoostTap;
+  final VoidCallback onFingerStrengthTap;
+  final VoidCallback onReadingSheetMusicTap;
+
+  const _TechniquesSection({
+    required this.onSpeedBoostTap,
+    required this.onFingerStrengthTap,
+    required this.onReadingSheetMusicTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -588,30 +621,33 @@ class _TechniquesSection extends StatelessWidget {
           childAspectRatio: 1.0,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          children: const [
+          children: [
             _ExerciseItem(
               iconAsset: 'assets/icons/piano_courses_speed.svg',
-              iconBg: Color.fromRGBO(127, 230, 219, 0.1),
+              iconBg: const Color.fromRGBO(127, 230, 219, 0.1),
               title: 'Tăng tốc độ',
               subtitle: '15 PHÚT',
+              onTap: onSpeedBoostTap,
             ),
             _ExerciseItem(
               iconAsset: 'assets/icons/piano_courses_finger.svg',
-              iconBg: Color.fromRGBO(255, 159, 74, 0.1),
+              iconBg: const Color.fromRGBO(255, 159, 74, 0.1),
               title: 'Luyện ngón',
               subtitle: '10 PHÚT',
+              onTap: onFingerStrengthTap,
             ),
             _ExerciseItem(
               iconAsset: 'assets/icons/piano_courses_chord.svg',
-              iconBg: Color.fromRGBO(255, 159, 74, 0.1),
-              title: 'Hợp âm',
+              iconBg: const Color.fromRGBO(255, 159, 74, 0.1),
+              title: 'Đọc nhạc',
               subtitle: '12 PHÚT',
+              onTap: onReadingSheetMusicTap,
             ),
-            _ExerciseItem(
+            const _ExerciseItem(
               iconAsset: 'assets/icons/piano_courses_improv.svg',
               iconBg: Color.fromRGBO(127, 230, 219, 0.1),
-              title: 'Ứng tấu',
-              subtitle: '20 PHÚT',
+              title: 'Xem tất cả',
+              subtitle: '50+ bài tập',
             ),
           ],
         ),
@@ -626,16 +662,18 @@ class _ExerciseItem extends StatelessWidget {
     required this.iconBg,
     required this.title,
     required this.subtitle,
+    this.onTap,
   });
 
   final String iconAsset;
   final Color iconBg;
   final String title;
   final String subtitle;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final content = Container(
       decoration: BoxDecoration(
         color: const Color(0xFF161A21),
         borderRadius: BorderRadius.circular(12),
@@ -677,6 +715,16 @@ class _ExerciseItem extends StatelessWidget {
           ),
         ],
       ),
+    );
+
+    if (onTap == null) {
+      return content;
+    }
+
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: content,
     );
   }
 }

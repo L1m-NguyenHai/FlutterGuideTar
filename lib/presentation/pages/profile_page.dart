@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:guidetar/presentation/pages/support_page.dart';
-
+import 'package:guidetar/presentation/pages/add_note_page.dart';
 import 'package:guidetar/presentation/pages/edit_profile_page.dart';
 import 'package:guidetar/presentation/pages/favorite_list.dart';
 import 'package:guidetar/presentation/pages/weekly_info_page.dart';
@@ -751,31 +751,40 @@ class _PersonalNotesSection extends StatelessWidget {
                 height: 28 / 20,
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: const Color(0xFF2A2A29),
-                borderRadius: BorderRadius.circular(999),
-              ),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 14,
-                    height: 14,
-                    child: _SafeSvgAsset('assets/icons/profile_add_note.svg'),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const AddNotePage(),
                   ),
-                  const SizedBox(width: 6),
-                  Text(
-                    'THÊM GHI CHÚ',
-                    style: GoogleFonts.manrope(
-                      color: const Color(0xFFFFB786),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0.6,
-                      height: 16 / 12,
+                );
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF2A2A29),
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 14,
+                      height: 14,
+                      child: _SafeSvgAsset('assets/icons/profile_add_note.svg'),
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 6),
+                    Text(
+                      'THÊM GHI CHÚ',
+                      style: GoogleFonts.manrope(
+                        color: const Color(0xFFFFB786),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0.6,
+                        height: 16 / 12,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
