@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:guidetar/presentation/pages/guitar/courses/guitar_c_major_lesson_page.dart';
 
 import 'package:guidetar/presentation/widgets/home_bottom_navbar.dart';
 
@@ -37,10 +38,10 @@ class _GuitarCoursePageState extends State<GuitarCoursePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 86),
-                  _HeroSection(
-                    onBackTap: () => Navigator.of(context).maybePop(),
-                  ),
+                  const SizedBox(height: 8),
+                  _TopBar(onBackTap: () => Navigator.of(context).maybePop()),
+                  const SizedBox(height: 18),
+                  const _HeroSection(),
                   const SizedBox(height: 36),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 37),
@@ -77,10 +78,67 @@ class _GuitarCoursePageState extends State<GuitarCoursePage> {
   }
 }
 
-class _HeroSection extends StatelessWidget {
-  const _HeroSection({required this.onBackTap});
+class _TopBar extends StatelessWidget {
+  const _TopBar({required this.onBackTap});
 
   final VoidCallback onBackTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 22),
+      child: SizedBox(
+        height: 44,
+        child: Row(
+          children: [
+            GestureDetector(
+              onTap: onBackTap,
+              behavior: HitTestBehavior.opaque,
+              child: const SizedBox(
+                width: 32,
+                height: 32,
+                child: Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: Color(0xFFFF8C00),
+                  size: 16,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                'Khóa học',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.plusJakartaSans(
+                  color: const Color(0xFFEAEAEA),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  height: 24 / 14,
+                ),
+              ),
+            ),
+            Container(
+              width: 28,
+              height: 28,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: const Color(0xFFFF8C00), width: 1.2),
+              ),
+              alignment: Alignment.center,
+              child: const Icon(
+                Icons.settings_outlined,
+                color: Color(0xFFFF8C00),
+                size: 14,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _HeroSection extends StatelessWidget {
+  const _HeroSection();
 
   @override
   Widget build(BuildContext context) {
@@ -146,36 +204,7 @@ class _HeroSection extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: onBackTap,
-                          behavior: HitTestBehavior.opaque,
-                          child: Container(
-                            width: 36,
-                            height: 36,
-                            decoration: BoxDecoration(
-                              color: const Color.fromRGBO(14, 14, 14, 0.45),
-                              borderRadius: BorderRadius.circular(9999),
-                              border: Border.all(
-                                color: const Color.fromRGBO(
-                                  255,
-                                  255,
-                                  255,
-                                  0.12,
-                                ),
-                              ),
-                            ),
-                            alignment: Alignment.center,
-                            child: const Icon(
-                              Icons.arrow_back_ios_new_rounded,
-                              color: Colors.white,
-                              size: 16,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    const SizedBox.shrink(),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -289,6 +318,22 @@ class _HeroSection extends StatelessWidget {
                             ),
                           ),
                         ),
+                        const SizedBox(height: 16),
+                        Container(
+                          width: 210,
+                          height: 210,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: const Color.fromRGBO(255, 255, 255, 0.35),
+                              width: 2,
+                            ),
+                            image: const DecorationImage(
+                              image: AssetImage('assets/images/guitar_course_hero.png'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ],
@@ -339,6 +384,13 @@ class _CurriculumSection extends StatelessWidget {
           active: true,
           completed: false,
           accent: true,
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => const GuitarCMajorLessonPage(),
+              ),
+            );
+          },
         ),
         const SizedBox(height: 40),
         _SectionHeader(
@@ -425,6 +477,7 @@ class _LessonCard extends StatelessWidget {
     this.active = false,
     this.completed = false,
     this.accent = false,
+    this.onTap,
   });
 
   final String imageAsset;
@@ -433,6 +486,7 @@ class _LessonCard extends StatelessWidget {
   final bool active;
   final bool completed;
   final bool accent;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -463,67 +517,68 @@ class _LessonCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: active
-                      ? const Color(0xFFFF8C00)
-                      : const Color.fromRGBO(255, 140, 0, 0.2),
-                  shape: BoxShape.circle,
+          Expanded(
+            child: Row(
+              children: [
+                Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: active
+                        ? const Color(0xFFFF8C00)
+                        : completed
+                            ? const Color.fromRGBO(255, 140, 0, 0.2)
+                            : const Color(0xFF2A2A29),
+                    shape: BoxShape.circle,
+                  ),
+                  alignment: Alignment.center,
+                  child: SvgPicture.asset(
+                    active
+                        ? 'assets/icons/guitar_course_chevron.svg'
+                        : completed
+                            ? 'assets/icons/guitar_course_back.svg'
+                            : 'assets/icons/guitar_course_arrow.svg',
+                    width: active ? 11 : completed ? 20 : 16,
+                    height: active ? 14 : completed ? 20 : 21,
+                  ),
                 ),
-                alignment: Alignment.center,
-                child: SvgPicture.asset(
-                  active
-                      ? 'assets/icons/guitar_course_arrow.svg'
-                      : 'assets/icons/guitar_course_lock.svg',
-                  width: active ? 11 : 16,
-                  height: active ? 14 : 21,
-                ),
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      title,
-                      style: GoogleFonts.plusJakartaSans(
-                        color: const Color(0xFFEAEAEA),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        height: 24 / 16,
+                const SizedBox(width: 20),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        title,
+                        style: GoogleFonts.plusJakartaSans(
+                          color: const Color(0xFFEAEAEA),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          height: 24 / 16,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Text(
-                      subtitle,
-                      style: GoogleFonts.plusJakartaSans(
-                        color: accent
-                            ? const Color(0xFFFF8C00)
-                            : const Color(0xFFADAAAA),
-                        fontSize: 14,
-                        height: 20 / 14,
+                      Text(
+                        subtitle,
+                        style: GoogleFonts.plusJakartaSans(
+                          color: accent
+                              ? const Color(0xFFFF8C00)
+                              : const Color(0xFFADAAAA),
+                          fontSize: 14,
+                          height: 20 / 14,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          if (completed)
-            SizedBox(
-              width: 16,
-              height: 16,
-              child: SvgPicture.asset('assets/icons/guitar_course_chevron.svg'),
-            )
-          else
+          const SizedBox(width: 16),
+          if (active)
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -535,12 +590,32 @@ class _LessonCard extends StatelessWidget {
                 height: 12,
                 child: SvgPicture.asset('assets/icons/guitar_course_more.svg'),
               ),
+            )
+          else if (completed)
+            SizedBox(
+              width: 4,
+              height: 16,
+              child: SvgPicture.asset('assets/icons/guitar_course_progress.svg'),
+            )
+          else
+            SizedBox(
+              width: 16,
+              height: 21,
+              child: SvgPicture.asset('assets/icons/guitar_course_arrow.svg'),
             ),
         ],
       ),
     );
 
-    return card;
+    if (onTap == null) {
+      return card;
+    }
+
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: card,
+    );
   }
 }
 
@@ -742,7 +817,7 @@ class _CourseStatsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Thống kê khóa học',
+            'Chi tiết khóa học',
             style: GoogleFonts.plusJakartaSans(
               color: const Color(0xFFEAEAEA),
               fontSize: 20,
@@ -750,52 +825,65 @@ class _CourseStatsCard extends StatelessWidget {
               height: 28 / 20,
             ),
           ),
-          const SizedBox(height: 16),
-          _StatRow(label: 'Bài học đã xem', value: '3/12'),
-          const SizedBox(height: 12),
-          _StatRow(label: 'Thời lượng hoàn thành', value: '35 phút'),
-          const SizedBox(height: 12),
-          _StatRow(label: 'Cấp độ hiện tại', value: 'Sơ cấp'),
+          const SizedBox(height: 20),
+          const Row(
+            children: [
+              Expanded(
+                child: _CourseMetric(label: 'Bài học', value: '24 Bài'),
+              ),
+              SizedBox(width: 16),
+              Expanded(
+                child: _CourseMetric(label: 'Thời lượng', value: '8.5 Giờ'),
+              ),
+            ],
+          ),
+          const SizedBox(height: 18),
+          const Row(
+            children: [
+              Expanded(
+                child: _CourseMetric(label: 'Học viên', value: '1.2k'),
+              ),
+              SizedBox(width: 16),
+              Expanded(
+                child: _CourseMetric(label: 'Đánh giá', value: '4.9 ★'),
+              ),
+            ],
+          ),
         ],
       ),
     );
   }
 }
 
-class _StatRow extends StatelessWidget {
-  const _StatRow({required this.label, required this.value});
+class _CourseMetric extends StatelessWidget {
+  const _CourseMetric({required this.label, required this.value});
 
   final String label;
   final String value;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Flexible(
-          child: Text(
-            label,
-            style: GoogleFonts.plusJakartaSans(
-              color: const Color(0xFFADAAAA),
-              fontSize: 14,
-              height: 20 / 14,
-            ),
-            overflow: TextOverflow.ellipsis,
+        Text(
+          label,
+          style: GoogleFonts.plusJakartaSans(
+            color: const Color(0xFFADAAAA),
+            fontSize: 11,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.8,
+            height: 15 / 11,
           ),
         ),
-        const SizedBox(width: 16),
-        Flexible(
-          child: Text(
-            value,
-            textAlign: TextAlign.end,
-            style: GoogleFonts.plusJakartaSans(
-              color: const Color(0xFFFF8C00),
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-              height: 20 / 14,
-            ),
-            overflow: TextOverflow.ellipsis,
+        const SizedBox(height: 7),
+        Text(
+          value,
+          style: GoogleFonts.plusJakartaSans(
+            color: const Color(0xFFEAEAEA),
+            fontSize: 24,
+            fontWeight: FontWeight.w700,
+            height: 30 / 24,
           ),
         ),
       ],

@@ -10,6 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 
 import 'package:guidetar/presentation/pages/guitar/tools/artist_jack_page.dart';
+import 'package:guidetar/presentation/pages/guitar/tools/song_gio_reviews_page.dart';
 import 'package:guidetar/presentation/widgets/home_bottom_navbar.dart';
 
 class SongGioChordPage extends StatefulWidget {
@@ -217,39 +218,47 @@ class _SongHeader extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-          decoration: BoxDecoration(
-            color: const Color(0xFF20201F),
-            borderRadius: BorderRadius.circular(999),
-          ),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 11.7,
-                height: 11.1,
-                child: SvgPicture.asset('assets/icons/songgio_rating_star.svg'),
-              ),
-              const SizedBox(width: 4),
-              Text(
-                '4.5',
-                style: GoogleFonts.manrope(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  height: 20 / 14,
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const SongGioReviewsPage()),
+            );
+          },
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            decoration: BoxDecoration(
+              color: const Color(0xFF20201F),
+              borderRadius: BorderRadius.circular(999),
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 11.7,
+                  height: 11.1,
+                  child: SvgPicture.asset('assets/icons/songgio_rating_star.svg'),
                 ),
-              ),
-              const SizedBox(width: 4),
-              Text(
-                '(386)',
-                style: GoogleFonts.manrope(
-                  color: const Color(0xFFADAAAA),
-                  fontSize: 10,
-                  height: 15 / 10,
+                const SizedBox(width: 4),
+                Text(
+                  '4.5',
+                  style: GoogleFonts.manrope(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    height: 20 / 14,
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(width: 4),
+                Text(
+                  '(386)',
+                  style: GoogleFonts.manrope(
+                    color: const Color(0xFFADAAAA),
+                    fontSize: 10,
+                    height: 15 / 10,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         const SizedBox(width: 8),

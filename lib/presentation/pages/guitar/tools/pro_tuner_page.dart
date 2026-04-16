@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:guidetar/presentation/pages/guitar/tools/pro_tuner_settings_page.dart';
 
 import 'package:guidetar/presentation/widgets/home_bottom_navbar.dart';
 
@@ -12,7 +13,6 @@ class ProTunerPage extends StatefulWidget {
 }
 
 class _ProTunerPageState extends State<ProTunerPage> {
-  static const String _iconAsset = 'assets/icons/pro_tuner_note_icon.svg';
   static const String _settingsAsset = 'assets/images/pro_tuner_settings.png';
   static const String _centerLineAsset = 'assets/icons/pro_tuner_center_line.svg';
   static const String _pitchRingAsset = 'assets/icons/pro_tuner_pitch_ring.svg';
@@ -49,12 +49,18 @@ class _ProTunerPageState extends State<ProTunerPage> {
               child: Column(
                 children: [
                   _Header(
-                    iconAsset: _iconAsset,
                     settingsAsset: _settingsAsset,
                     onBackTap: () {
                       if (Navigator.of(context).canPop()) {
                         Navigator.of(context).pop();
                       }
+                    },
+                    onSettingsTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const ProTunerSettingsPage(),
+                        ),
+                      );
                     },
                   ),
                   const SizedBox(height: 7),
@@ -120,14 +126,14 @@ class _ProTunerPageState extends State<ProTunerPage> {
 
 class _Header extends StatelessWidget {
   const _Header({
-    required this.iconAsset,
     required this.settingsAsset,
     required this.onBackTap,
+    required this.onSettingsTap,
   });
 
-  final String iconAsset;
   final String settingsAsset;
   final VoidCallback onBackTap;
+  final VoidCallback onSettingsTap;
 
   @override
   Widget build(BuildContext context) {
@@ -148,12 +154,6 @@ class _Header extends StatelessWidget {
               alignment: Alignment.center,
               child: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 16),
             ),
-          ),
-          const SizedBox(width: 12),
-          SizedBox(
-            width: 16,
-            height: 16,
-            child: SvgPicture.asset(iconAsset),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -183,10 +183,14 @@ class _Header extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
-            width: 40,
-            height: 40,
-            child: Image.asset(settingsAsset, fit: BoxFit.contain),
+          GestureDetector(
+            onTap: onSettingsTap,
+            behavior: HitTestBehavior.opaque,
+            child: SizedBox(
+              width: 40,
+              height: 40,
+              child: Image.asset(settingsAsset, fit: BoxFit.contain),
+            ),
           ),
         ],
       ),

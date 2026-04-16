@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:guidetar/presentation/pages/piano/courses/piano_basic_courses_page.dart';
+import 'package:guidetar/presentation/pages/piano/tools/piano_sim_landscape_page.dart';
 import 'package:guidetar/presentation/pages/piano/tools/piano_sheet_play_page.dart';
 
 import 'package:guidetar/presentation/widgets/home_bottom_navbar.dart';
@@ -29,6 +30,12 @@ class _PianoToolkitPageState extends State<PianoToolkitPage> {
     ).push(MaterialPageRoute(builder: (_) => const PianoSheetPlayPage()));
   }
 
+  void _openPianoSim() {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const PianoSimLandscapePage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,6 +54,7 @@ class _PianoToolkitPageState extends State<PianoToolkitPage> {
                   const SizedBox(height: 24),
                   _MainToolsSection(
                     gridMode: _gridMode,
+                    onPianoSimTap: _openPianoSim,
                     onSheetPlayTap: _openSheetPlay,
                     onGridTap: () {
                       if (!_gridMode) {
@@ -229,12 +237,14 @@ class _PianoHintRow extends StatelessWidget {
 class _MainToolsSection extends StatelessWidget {
   const _MainToolsSection({
     required this.gridMode,
+    required this.onPianoSimTap,
     required this.onSheetPlayTap,
     required this.onGridTap,
     required this.onListTap,
   });
 
   final bool gridMode;
+  final VoidCallback onPianoSimTap;
   final VoidCallback onSheetPlayTap;
   final VoidCallback onGridTap;
   final VoidCallback onListTap;
@@ -242,11 +252,12 @@ class _MainToolsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tools = <_PianoToolItem>[
-      const _PianoToolItem(
+      _PianoToolItem(
         title: 'Piano Sim',
         description: 'giả lập đàn piano',
         iconAsset: 'assets/icons/piano_toolkit_icon_sim.svg',
         iconBg: Color.fromRGBO(255, 146, 62, 0.1),
+        onTap: onPianoSimTap,
       ),
       _PianoToolItem(
         title: 'Sheet play',
@@ -281,6 +292,7 @@ class _MainToolsSection extends StatelessWidget {
                   color: const Color.fromRGBO(72, 72, 71, 0.1),
                 ),
               ),
+              clipBehavior: Clip.antiAlias,
               child: Row(
                 children: [
                   _ModeButton(
@@ -352,14 +364,21 @@ class _ModeButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         decoration: BoxDecoration(
-          color: selected ? const Color(0xFFFF923E) : const Color(0xFF131313),
+          color: selected ? const Color(0xFFFF923E) : Colors.transparent,
           borderRadius: BorderRadius.circular(9999),
+          border: Border.all(
+            color: selected
+                ? const Color.fromRGBO(255, 191, 132, 0.45)
+                : Colors.transparent,
+            width: 0.8,
+          ),
           boxShadow: selected
               ? const [
                   BoxShadow(
-                    color: Color.fromRGBO(255, 146, 62, 0.2),
-                    blurRadius: 15,
-                    offset: Offset(0, 6),
+                    color: Color.fromRGBO(255, 146, 62, 0.12),
+                    blurRadius: 6,
+                    offset: Offset(0, 2),
+                    spreadRadius: 0,
                   ),
                 ]
               : null,
