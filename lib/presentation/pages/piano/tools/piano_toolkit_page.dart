@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:guidetar/presentation/pages/piano/courses/piano_basic_courses_page.dart';
@@ -30,10 +31,21 @@ class _PianoToolkitPageState extends State<PianoToolkitPage> {
     ).push(MaterialPageRoute(builder: (_) => const PianoSheetPlayPage()));
   }
 
-  void _openPianoSim() {
-    Navigator.of(
+  Future<void> _openPianoSim() async {
+    await SystemChrome.setPreferredOrientations(const [
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+
+    if (!mounted) return;
+
+    await Navigator.of(
       context,
     ).push(MaterialPageRoute(builder: (_) => const PianoSimLandscapePage()));
+
+    await SystemChrome.setPreferredOrientations(const [
+      DeviceOrientation.portraitUp,
+    ]);
   }
 
   @override

@@ -27,21 +27,37 @@ class _PianoSimLandscapePageState extends State<PianoSimLandscapePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF0B0B0B),
-      body: SafeArea(
-        bottom: false,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
-          child: Column(
-            children: [
-              _CompactHeader(onBack: () => Navigator.of(context).maybePop()),
-              const SizedBox(height: 14),
-              const Expanded(child: _KeyboardPanel()),
-            ],
-          ),
+    final size = MediaQuery.of(context).size;
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+
+    final content = SafeArea(
+      bottom: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
+        child: Column(
+          children: [
+            _CompactHeader(onBack: () => Navigator.of(context).maybePop()),
+            const SizedBox(height: 14),
+            const Expanded(child: _KeyboardPanel()),
+          ],
         ),
       ),
+    );
+
+    return Scaffold(
+      backgroundColor: const Color(0xFF0B0B0B),
+      body: isPortrait
+          ? Center(
+              child: RotatedBox(
+                quarterTurns: 1,
+                child: SizedBox(
+                  width: size.height,
+                  height: size.width,
+                  child: content,
+                ),
+              ),
+            )
+          : content,
     );
   }
 }
